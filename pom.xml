@@ -11,6 +11,7 @@
 	<groupId>nl.maas</groupId>
 	<artifactId>graal-base</artifactId>
 	<version>2025.01-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>graal-base</name>
 	<description>Base for GraalVM Spring boot</description>
 	<url/>
@@ -20,6 +21,9 @@
 	<developers>
 		<developer/>
 	</developers>
+	<modules>
+		<module>graal-base-test</module>
+	</modules>
 	<scm>
 		<connection/>
 		<developerConnection/>
@@ -27,18 +31,22 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
 		<kotlin.version>2.1.0</kotlin.version>
+		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+
+		<java.version>17</java.version>
+		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-kotlin</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-web</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.fasterxml.jackson.module</groupId>-->
+<!--			<artifactId>jackson-module-kotlin</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-reflect</artifactId>
@@ -48,11 +56,11 @@
 			<artifactId>kotlin-stdlib</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
@@ -93,10 +101,7 @@
 				<groupId>org.graalvm.buildtools</groupId>
 				<artifactId>native-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
