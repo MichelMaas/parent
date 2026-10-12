@@ -4,7 +4,7 @@
 
     <groupId>nl.maas</groupId>
     <artifactId>parent</artifactId>
-    <version>2026.01</version>
+    <version>2026.02-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>maas-parent</name>
     <url />
@@ -78,7 +78,7 @@
             https://github.com/MichelMaas/parent
         </url>
 
-        <tag>parent-2026.01</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
