@@ -9,18 +9,8 @@
     <packaging>pom</packaging>
     <name>maas-parent</name>
     <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+
+
     <properties>
         <!--		Kotlin-->
         <kotlinx-coroutines.version>1.11.0</kotlinx-coroutines.version>
@@ -66,14 +56,31 @@
 
         <!--		Other-->
         <commons-text.version>1.9</commons-text.version>
-        <commons.version>3.12.0</commons.version>
+        <commons.version>3.18.0</commons.version>
         <maven.version>3.9.9</maven.version>
         <open.version>8.5.0</open.version>
         <wicket.framework.lib.version>2025.01-SNAPSHOT</wicket.framework.lib.version>
         <gson.version>2.8.8</gson.version>
 
         <kapt.gradle.plugin.version>2.1.0</kapt.gradle.plugin.version>
+        <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
     </properties>
+
+    <scm>
+        <connection>
+            scm:git:https://github.com/MichelMaas/parent.git
+        </connection>
+
+        <developerConnection>
+            scm:git:ssh://git@github.com/MichelMaas/parent.git
+        </developerConnection>
+
+        <url>
+            https://github.com/MichelMaas/parent
+        </url>
+
+        <tag>HEAD</tag>
+    </scm>
 
     <dependencyManagement>
         <dependencies>
@@ -311,7 +318,6 @@
         </dependency>
 
     </dependencies>
-
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
@@ -321,6 +327,97 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${maven-war-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.3.1</version>
+
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <preparationGoals>clean verify</preparationGoals>
+                        <goals>verify</goals>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.7.1</version>
+
+                    <executions>
+                        <execution>
+                            <id>prepare-jpackage-input</id>
+                            <phase>post-integration-test</phase>
+
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+
+                            <configuration>
+                                <descriptors>
+                                    <descriptor>
+                                        ${jpackage.assembly.descriptor}
+                                    </descriptor>
+                                </descriptors>
+
+                                <outputDirectory>
+                                    ${project.build.directory}
+                                </outputDirectory>
+
+                                <finalName>jpackage-input</finalName>
+
+                                <appendAssemblyId>false</appendAssemblyId>
+                                <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.panteleyev</groupId>
+                    <artifactId>jpackage-maven-plugin</artifactId>
+                    <version>1.8.0</version>
+
+                    <executions>
+                        <execution>
+                            <id>build-native-package</id>
+                            <phase>verify</phase>
+
+                            <goals>
+                                <goal>jpackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+
+                    <configuration>
+                        <name>${jpackage.app.name}</name>
+
+                        <input>
+                            ${project.build.directory}/jpackage-input
+                        </input>
+
+                        <mainJar>${jpackage.main.jar}</mainJar>
+
+                        <destination>
+                            ${project.build.directory}/jpackage
+                        </destination>
+
+                        <removeDestination>true</removeDestination>
+
+                        <appVersion>${project.version}</appVersion>
+
+                        <description>${project.description}</description>
+                        <vendor>${jpackage.vendor}</vendor>
+
+                        <icon>${jpackage.icon}</icon>
+
+                        <javaOptions>
+                            <option>--add-exports=java.base/java.lang=ALL-UNNAMED</option>
+                            <option>--add-exports=java.desktop/sun.awt=ALL-UNNAMED</option>
+                            <option>--add-exports=java.desktop/sun.java2d=ALL-UNNAMED</option>
+                        </javaOptions>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.jetbrains.kotlin</groupId>
@@ -382,6 +479,16 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.3.1</version>
+
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <goals>install</goals>
+                </configuration>
             </plugin>
         </plugins>
     </build>
