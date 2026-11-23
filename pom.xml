@@ -65,6 +65,22 @@
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
     </properties>
 
+    <repositories>
+    <repository>
+        <id>reposilite-repository-releases</id>
+        <name>Reposilite Repository</name>
+        <url>http://mnw-repo.mnw:8080/releases</url>
+    </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>mnw-repo</id>
+            <name>MNW Releases</name>
+            <url>http://mnw-repo.mnw:8080/releases</url>
+        </repository>
+    </distributionManagement>
+
     <scm>
         <connection>
             scm:git:https://github.com/MichelMaas/parent.git
@@ -410,6 +426,12 @@
                         <vendor>${jpackage.vendor}</vendor>
 
                         <icon>${jpackage.icon}</icon>
+
+                        <jLinkOptions>
+                            <option>--strip-debug</option>
+                            <option>--no-man-pages</option>
+                            <option>--no-header-files</option>
+                        </jLinkOptions>
 
                         <javaOptions>
                             <option>--add-exports=java.base/java.lang=ALL-UNNAMED</option>
