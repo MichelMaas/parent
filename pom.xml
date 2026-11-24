@@ -40,7 +40,7 @@
         <jakarta.servlet.version>3.0.2</jakarta.servlet.version>
         <fasterxml.version>2.12.5</fasterxml.version>
         <jquery.version>3.6.4</jquery.version>
-        <jackson-module-kotlin.version>2.12.5</jackson-module-kotlin.version>
+        <jackson-module-kotlin.version>2.21.7</jackson-module-kotlin.version>
 
         <!--		Wicket-->
         <wicket-spring-boot.version>5.0.0</wicket-spring-boot.version>
@@ -54,7 +54,7 @@
 
 
         <!--		Other-->
-        <commons-text.version>1.9</commons-text.version>
+        <commons-text.version>1.15.0</commons-text.version>
         <commons.version>3.18.0</commons.version>
         <maven.version>3.9.9</maven.version>
         <open.version>8.5.0</open.version>
